@@ -81,9 +81,15 @@ h1, h2, h3, p, figure { margin: 0; }
 @keyframes arrow-drift { 0%, 100% { translate: 0 -1px; } 50% { translate: 0 3px; } }
 .hero-art { position: absolute; inset: 0; pointer-events: none; }
 .hero-cursor-objects { position: absolute; z-index: 5; inset: 0; overflow: hidden; pointer-events: none; }
-.cursor-object { position: absolute; width: clamp(76px, 11vw, 164px); height: auto; object-fit: contain; opacity: 0; transform: translate(-50%, -50%) scale(.62) rotate(var(--spawn-rotation, -12deg)); filter: drop-shadow(0 8px 12px #201e1f24); animation: cursor-object-life 1.35s cubic-bezier(.2,.75,.25,1) forwards; }
-.cursor-object--paper { mix-blend-mode: multiply; filter: none; }
-@keyframes cursor-object-life { 12% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(var(--spawn-rotation, -12deg)); } 68% { opacity: 1; } 100% { opacity: 0; transform: translate(-50%, -55%) scale(.88) rotate(calc(var(--spawn-rotation, -12deg) + 12deg)); } }
+.hero-cursor-objects--paper { mix-blend-mode: multiply; }
+.cursor-object { position: absolute; width: clamp(76px, 11vw, 164px); height: auto; object-fit: contain; opacity: 0; transform: translate(-50%, -50%) scale(.62) rotate(var(--spawn-rotation, -12deg)); filter: drop-shadow(0 8px 12px #201e1f24); animation: cursor-object-life 1.35s cubic-bezier(.16,.7,.22,1) forwards; will-change: transform, opacity; }
+.hero-cursor-objects--paper .cursor-object { filter: none; }
+@keyframes cursor-object-life {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.62) rotate(var(--spawn-rotation, -12deg)); }
+  12% { opacity: 1; transform: translate(calc(-50% + var(--mid-drift-x, 0px)), calc(-50% + var(--mid-drift-y, 0px))) scale(1) rotate(var(--spawn-rotation, -12deg)); }
+  66% { opacity: 1; transform: translate(calc(-50% + var(--drift-x, 0px)), calc(-50% + var(--drift-y, 0px))) scale(.9) rotate(calc(var(--spawn-rotation, -12deg) + 8deg)); }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--end-drift-x, 0px)), calc(-50% + var(--end-drift-y, 0px))) scale(.62) rotate(calc(var(--spawn-rotation, -12deg) + 18deg)); }
+}
 .art-object, .art-spring-rotate { position: absolute; object-fit: contain; will-change: transform; }
 .art-object { scale: 1.08; transition: transform .3s cubic-bezier(.2,.75,.25,1); }
 .art-ceramic { left: 14.4%; top: 90px; width: 167px; }
@@ -118,23 +124,25 @@ h1, h2, h3, p, figure { margin: 0; }
 @media (hover: hover) and (pointer: fine) {
   .benefit-card:hover { rotate: 1.2deg; }
 }
-.eligibility { position: relative; display: flex; align-items: center; justify-content: center; min-height: 820px; padding: 90px 8.333vw; overflow: hidden; }
-.eligibility-inner { position: relative; display: grid; grid-template-columns: 53.2% minmax(0, 1fr); gap: 3.5%; align-items: start; width: min(84.17vw, 1600px); margin: auto; }
-.eligibility-collage { position: relative; width: 100%; aspect-ratio: 646 / 638; isolation: isolate; }
+.eligibility { position: relative; display: flex; align-items: center; justify-content: center; padding: 9.375vw 8.333vw 138px; overflow: hidden; }
+.eligibility-inner { position: relative; display: flex; flex-direction: column; align-items: center; width: min(100%, 83.333vw, 1440px); margin: auto; }
+.eligibility-collage { position: relative; flex: 0 0 auto; width: min(100%, 83.4vw, 1440px); aspect-ratio: 1201 / 515; isolation: isolate; }
 .eligibility-photo { position: absolute; overflow: hidden; border: 3px solid #fff; border-radius: 32px; background: #fff; box-shadow: 0 4px 4px #0004; }
-.eligibility-photo--garden { z-index: 1; left: 0; top: 0; width: 54.5%; height: 69.8%; display: grid; grid-template-columns: 1fr 1fr; transform: rotate(-10.12deg); }
+.eligibility-photo--garden { z-index: 1; left: 7.08%; top: 6.21%; width: 29.3%; height: 86.5%; display: grid; grid-template-columns: 1fr 1fr; transform: rotate(-10.12deg); }
 .garden-panel { display: block; min-width: 0; background-image: url('assets/eligibility-photo-main.png'); background-repeat: no-repeat; background-size: 800% auto; }
 .garden-panel--tomatoes { background-image: url('assets/eligibility-photo-collage.png'); background-size: cover; background-position: center; }
 .garden-panel--watering { background-position: 35.714% 0; }
-.eligibility-photo--florist { z-index: 2; left: 40.5%; top: 2.1%; width: 53%; height: 76%; transform: rotate(5.58deg); }
+.eligibility-photo--florist { z-index: 2; left: 59.95%; top: .09%; width: 32%; height: 94.6%; transform: rotate(5.58deg); }
 .eligibility-photo--florist img, .eligibility-photo--woodshop img { width: 100%; height: 100%; object-fit: cover; }
-.eligibility-photo--woodshop { z-index: 3; left: 23.5%; top: 56.3%; width: 59.8%; height: 38.1%; transform: rotate(-5.47deg); }
-.eligibility-sticker { position: absolute; z-index: 4; left: 3.1%; top: 69.8%; width: 30.3%; transform: rotate(16.79deg); }
-.eligibility-copy { max-width: 100%; padding-top: 23.7%; }
+.eligibility-photo--woodshop { z-index: 3; left: 34.97%; top: 13.98%; width: 33.9%; height: 54.1%; transform: rotate(-5.47deg); }
+.eligibility-sticker { position: absolute; z-index: 4; left: 8.66%; top: 79.22%; width: 17.2%; transform: rotate(-9.31deg); }
+.eligibility-pretzel { position: absolute; z-index: 5; left: 49.96%; top: 55.15%; width: 12.82%; height: auto; }
+.eligibility-copy { width: 100%; max-width: none; padding-top: 0; }
 .eligibility-copy h2, .steps h2 { max-width: none; font-size: clamp(32px, 2.78vw, 48px); line-height: 1.1; letter-spacing: -.04em; font-weight: 700; }
-.eligibility-copy ul { display: grid; gap: clamp(24px, 3.75vw, 54px); margin: clamp(36px, 4vw, 58px) 0 0; padding: 0; list-style: none; }
-.eligibility-copy li { max-width: 100%; font-size: clamp(18px, 1.667vw, 30px); line-height: 1.2; font-weight: 600; }
-.eligibility-pretzel { position: absolute; z-index: 5; top: 5vw; right: 8.2%; width: clamp(110px, 10.7vw, 154px); }
+.eligibility-copy h2 { width: min(36.32vw, 700px); margin: 0 auto; text-align: center; }
+.eligibility-copy ul { position: relative; left: 4px; display: grid; grid-template-columns: 250px 330px 298px; justify-content: space-between; align-items: start; width: min(72.6vw, 1045px); margin: clamp(72px, 8.75vw, 128px) auto 0; padding: 0; list-style: none; }
+.eligibility-copy li { max-width: 100%; font-size: clamp(18px, 1.667vw, 30px); line-height: 1.2; font-weight: 600; text-align: center; }
+.eligibility-copy li:nth-child(2) { transform: translateX(clamp(0px, 1.39vw, 24px)); }
 .steps { padding: 0 8.333vw 138px; }
 .steps-inner { width: min(100%, var(--page-width)); margin: auto; }
 .steps-panel { position: relative; display: flex; flex-direction: column; gap: 28px; padding: 36px 48px 48px; border: 2px solid var(--orange); border-radius: 32px; background: var(--orange); color: var(--paper); }
@@ -176,13 +184,13 @@ h1, h2, h3, p, figure { margin: 0; }
   .benefit-stack { height: min(384px, 54svh); }
   .benefit-card { padding-inline: 30px; }
   .benefit-card h3 { width: auto; font-size: 27px; }
-  .eligibility { min-height: 100svh; padding: 88px 24px; }
-  .eligibility-inner { width: 100%; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 28px; align-items: center; }
-  .eligibility-copy { padding-top: 0; }
-  .eligibility-copy h2 { font-size: clamp(28px, 4vw, 36px); }
-  .eligibility-copy ul { gap: 24px; margin-top: 32px; }
+  .eligibility { min-height: 0; padding: 88px 24px 100px; }
+  .eligibility-inner { width: 100%; }
+  .eligibility-collage { width: min(100%, 83.4vw, 1201px); }
+  .eligibility-copy h2 { width: min(100%, 523px); font-size: clamp(28px, 4vw, 36px); }
+  .eligibility-copy ul { left: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; width: 100%; margin-top: 64px; }
+  .eligibility-copy li:nth-child(2) { transform: none; }
   .eligibility-copy li { font-size: clamp(18px, 2.2vw, 22px); }
-  .eligibility-pretzel { top: 24px; right: 8%; }
   .steps { padding-inline: 24px; }
   .eligibility-copy h2, .steps h2 { font-size: 34px; }
   .steps-panel { padding: 28px 30px 32px; }
@@ -197,13 +205,13 @@ h1, h2, h3, p, figure { margin: 0; }
   .benefit-stack { flex: 0 0 auto; width: min(100%, 420px); height: min(280px, 42svh); margin: 0 auto; }
   .benefit-card { padding: 22px 24px 28px; border-radius: 26px; }
   .benefit-card h3 { max-width: 265px; font-size: clamp(19px, 5vw, 25px); }
-  .eligibility { padding: 120px 24px 88px; }
-  .eligibility-inner { grid-template-columns: 1fr; gap: 30px; width: 100%; }
-  .eligibility-collage { width: min(100%, 646px); margin-inline: auto; }
+  .eligibility { padding: 112px 24px 88px; }
+  .eligibility-inner { width: 100%; }
+  .eligibility-collage { width: min(100%, 83.4vw, 1201px); margin-inline: auto; }
   .eligibility-copy { width: 100%; max-width: none; padding-top: 0; }
-  .eligibility-copy ul { margin-top: 24px; }
-  .eligibility-copy li { font-size: 18px; }
-  .eligibility-pretzel { top: 16px; right: 22px; width: 100px; }
+  .eligibility-copy h2 { width: min(100%, 523px); }
+  .eligibility-copy ul { left: 0; grid-template-columns: 1fr; gap: 18px; width: 100%; margin-top: 32px; }
+  .eligibility-copy li { font-size: 18px; text-align: left; }
   .steps { padding-inline: 24px; }
   .steps-panel { padding: 26px 28px 30px; }
   .steps-list { grid-template-columns: 1fr; gap: 18px; min-height: 0; }
@@ -244,12 +252,11 @@ h1, h2, h3, p, figure { margin: 0; }
   .benefit-card { padding: 20px 22px 24px; border-radius: 26px; }
   .card-number { font-size: 20px; }
   .eligibility { padding: 90px 16px; }
-  .eligibility-inner { grid-template-columns: 1fr; gap: 30px; }
+  .eligibility-inner { width: 100%; }
   .eligibility-collage { width: 100%; }
   .eligibility-copy h2, .steps h2 { font-size: clamp(27px, 7.2vw, 36px); }
   .eligibility-copy ul { gap: 16px; margin-top: 20px; }
   .eligibility-copy li { font-size: 15px; }
-  .eligibility-pretzel { top: 25px; right: 22px; left: auto; width: 86px; }
   .steps { padding: 0 16px 88px; }
   .steps-panel { gap: 20px; padding: 24px 22px 26px; border-radius: 26px; }
   .steps-panel h2 { font-size: clamp(27px, 7.2vw, 36px); }

@@ -79,7 +79,8 @@
   if (document.fonts?.ready) document.fonts.ready.then(updateOnScroll);
 
   const artObjects = [...document.querySelectorAll('.art-object')];
-  const cursorLayer = document.querySelector('.hero-cursor-objects');
+  const paperCursorLayer = document.querySelector('.hero-cursor-objects--paper');
+  const cutoutCursorLayer = document.querySelector('.hero-cursor-objects--cutouts');
   const teaserFoodImages = [
     'teaser-tomato.png', 'teaser-lemon.png', 'teaser-croissant.png', 'teaser-pepper.png',
     'teaser-icecream.png', 'teaser-radish.png', 'teaser-pretzel.png', 'teaser-fig.png',
@@ -95,20 +96,36 @@
   ];
   const teaserImages = [...teaserFoodImages, ...teaserObjectImages];
   let lastSpawnAt = 0;
-  let lastSpawnX = -Infinity;
-  let lastSpawnY = -Infinity;
-  const spawnTeaserImage = (x, y) => {
-    if (!cursorLayer) return;
-    const image = document.createElement('img');
+  let lastSpawnX = null;
+  let lastSpawnY = null;
+  let lastPointerX = null;
+  let lastPointerY = null;
+  let lastPointerAt = 0;
+  const spawnTeaserImage = (x, y, velocityX = 0, velocityY = 0, speed = 0) => {
     const filename = teaserImages[Math.floor(Math.random() * teaserImages.length)];
-    image.className = `cursor-object${teaserFoodImages.includes(filename) ? ' cursor-object--paper' : ''}`;
+    const foodImage = teaserFoodImages.includes(filename);
+    const layer = foodImage ? paperCursorLayer : cutoutCursorLayer;
+    if (!layer) return;
+    const image = document.createElement('img');
+    image.className = 'cursor-object';
     image.src = `assets/${filename}`;
     image.alt = '';
     image.setAttribute('aria-hidden', 'true');
-    image.style.left = `${clamp(x, 46, cursorLayer.clientWidth - 46)}px`;
-    image.style.top = `${clamp(y, 46, cursorLayer.clientHeight - 46)}px`;
+    image.style.left = `${clamp(x, 46, layer.clientWidth - 46)}px`;
+    image.style.top = `${clamp(y, 46, layer.clientHeight - 46)}px`;
     image.style.setProperty('--spawn-rotation', `${Math.round(Math.random() * 36 - 18)}deg`);
-    cursorLayer.append(image);
+    const angle = speed > .05 ? Math.atan2(velocityY, velocityX) : Math.random() * Math.PI * 2;
+    const drift = speed > .05 ? clamp(70 + speed * 190, 100, 280) : 110 + Math.random() * 80;
+    const sideDrift = (Math.random() - .5) * 54;
+    const driftX = Math.cos(angle) * drift - Math.sin(angle) * sideDrift;
+    const driftY = Math.sin(angle) * drift + Math.cos(angle) * sideDrift;
+    image.style.setProperty('--mid-drift-x', `${driftX * .3}px`);
+    image.style.setProperty('--mid-drift-y', `${driftY * .3}px`);
+    image.style.setProperty('--drift-x', `${driftX}px`);
+    image.style.setProperty('--drift-y', `${driftY}px`);
+    image.style.setProperty('--end-drift-x', `${driftX * 1.55}px`);
+    image.style.setProperty('--end-drift-y', `${driftY * 1.55}px`);
+    layer.append(image);
     window.setTimeout(() => image.remove(), 1450);
   };
 
@@ -118,14 +135,30 @@
       const x = (event.clientX - bounds.left) / bounds.width - 0.5;
       const y = (event.clientY - bounds.top) / bounds.height - 0.5;
       const now = performance.now();
-      const distance = Math.hypot(event.clientX - lastSpawnX, event.clientY - lastSpawnY);
-      if (now - lastSpawnAt > 190 && distance > 52) {
-        const offsetX = Math.random() * 130 - 65;
-        const offsetY = Math.random() * 130 - 65;
-        spawnTeaserImage(event.clientX - bounds.left + offsetX, event.clientY - bounds.top + offsetY);
+      if (lastPointerX === null) {
+        lastPointerX = event.clientX;
+        lastPointerY = event.clientY;
+        lastPointerAt = now;
         lastSpawnAt = now;
         lastSpawnX = event.clientX;
         lastSpawnY = event.clientY;
+      } else {
+        const elapsed = clamp(now - lastPointerAt, 16, 120);
+        const velocityX = (event.clientX - lastPointerX) / elapsed;
+        const velocityY = (event.clientY - lastPointerY) / elapsed;
+        const speed = Math.hypot(velocityX, velocityY);
+        const distanceFromSpawn = Math.hypot(event.clientX - lastSpawnX, event.clientY - lastSpawnY);
+        if (now - lastSpawnAt > 150 && distanceFromSpawn > 38) {
+          const offsetX = Math.random() * 34 - 17;
+          const offsetY = Math.random() * 34 - 17;
+          spawnTeaserImage(event.clientX - bounds.left + offsetX, event.clientY - bounds.top + offsetY, velocityX, velocityY, speed);
+          lastSpawnAt = now;
+          lastSpawnX = event.clientX;
+          lastSpawnY = event.clientY;
+        }
+        lastPointerX = event.clientX;
+        lastPointerY = event.clientY;
+        lastPointerAt = now;
       }
       artObjects.forEach((object) => {
         const depthX = Number(object.dataset.depthX || 0.2);
@@ -153,9 +186,9 @@
     style.textContent = '@keyframes float { from { translate: 0 0; rotate: 0deg; } to { translate: var(--float-x) var(--float-y); rotate: var(--float-rotation); } }';
     document.head.append(style);
     const spawnMobileObject = () => {
-      if (window.scrollY > hero.offsetHeight || !cursorLayer) return;
-      const x = cursorLayer.clientWidth * (.16 + Math.random() * .68);
-      const y = cursorLayer.clientHeight * (.18 + Math.random() * .64);
+      if (window.scrollY > hero.offsetHeight || !paperCursorLayer || !cutoutCursorLayer) return;
+      const x = paperCursorLayer.clientWidth * (.16 + Math.random() * .68);
+      const y = paperCursorLayer.clientHeight * (.18 + Math.random() * .64);
       spawnTeaserImage(x, y);
     };
     const nextAppearance = () => window.setTimeout(() => {
