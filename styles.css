@@ -41,7 +41,7 @@
   --orange: #f64a00;
   --green: #2f5d47;
   --blue: #5da1bc;
-  --page-width: 1400px;
+  --page-width: 100%;
   font-family: 'OK Sans Display', 'Arial', sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -62,7 +62,7 @@ a { color: inherit; }
 .header-cta { min-height: 52px; margin-left: auto; opacity: 0; translate: 24px 10px; rotate: 7deg; font-size: 17px; transition: opacity .4s ease .06s, translate .72s cubic-bezier(.2,.75,.25,1) .06s, rotate .72s cubic-bezier(.2,.75,.25,1) .06s, transform .42s cubic-bezier(.2,.75,.25,1), box-shadow .42s ease, background-color .32s ease; }
 .floating-header.is-visible .header-mark, .floating-header.is-visible .header-cta { opacity: 1; translate: 0 0; rotate: 0deg; }
 .hero { position: relative; overflow: hidden; min-height: 718px; background: var(--paper); }
-.hero-inner { position: relative; width: min(100%, 1440px); min-height: 718px; margin: auto; }
+.hero-inner { position: relative; width: 100%; min-height: 718px; margin: auto; }
 .hero-brand { position: absolute; z-index: 2; top: 16px; left: max(24px, calc((100% - var(--page-width))/2)); display: flex; align-items: center; gap: 13px; color: var(--ink); text-decoration: none; font-size: 33px; font-weight: 800; }
 .hero-brand img { width: 52px; height: 52px; }
 .hero-copy { position: absolute; z-index: 2; top: 266px; left: 50%; width: min(1100px, calc(100% - 48px)); text-align: center; transform: translateX(-50%); }
@@ -91,7 +91,7 @@ h1, h2, h3, p, figure { margin: 0; }
 .art-paint { left: 13%; top: 424px; width: 172px; }
 .art-button { right: 3.4%; top: 172px; width: 168px; transform: rotate(-43deg); }
 .art-letter { right: 17.4%; top: 420px; width: 140px; transform: rotate(-25deg); }
-.benefits { --benefits-runway: 130svh; position: relative; height: calc(100svh + var(--benefits-runway)); padding: 0 32px; background: var(--ink); color: var(--paper); }
+.benefits { --benefits-runway: 130svh; position: relative; height: calc(100svh + var(--benefits-runway)); padding: 0 24px; background: var(--ink); color: var(--paper); }
 .benefits-inner { position: sticky; top: 0; display: grid; grid-template-columns: minmax(0, 1fr) 420px; gap: 80px; align-items: center; width: min(100%, var(--page-width)); height: 100svh; margin: auto; }
 .benefits-copy { padding-top: 0; }
 .eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; font-size: 22px; font-weight: 700; }
@@ -112,17 +112,17 @@ h1, h2, h3, p, figure { margin: 0; }
 @media (hover: hover) and (pointer: fine) {
   .benefit-card:hover { rotate: 1.2deg; }
 }
-.eligibility { position: relative; min-height: 780px; padding: 170px 32px 120px; overflow: hidden; }
-.eligibility-inner { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 64px; align-items: center; width: min(100%, 1360px); margin: auto; }
+.eligibility { position: relative; display: flex; align-items: center; justify-content: center; min-height: 100svh; padding: 100px 24px; overflow: hidden; }
+.eligibility-inner { display: grid; grid-template-columns: 380px minmax(0, 1fr); gap: 64px; align-items: center; width: 100%; margin: auto; }
 .florist-frame { position: relative; width: 380px; height: 506px; }
 .florist-frame > img:first-child { width: 100%; height: 100%; border-radius: 32px; object-fit: cover; }
 .sticker-text { position: absolute; width: 195px; left: -25px; bottom: -32px; transform: rotate(-8deg); }
-.eligibility-copy { max-width: 600px; padding-top: 0; }
-.eligibility-copy h2, .steps h2 { max-width: 600px; font-size: 44px; line-height: 1.1; letter-spacing: -.04em; font-weight: 700; }
+.eligibility-copy { max-width: none; padding-top: 0; }
+.eligibility-copy h2, .steps h2 { max-width: none; font-size: 44px; line-height: 1.1; letter-spacing: -.04em; font-weight: 700; }
 .eligibility-copy ul { display: grid; gap: 22px; margin: 76px 0 0; padding: 0; list-style: none; }
-.eligibility-copy li { max-width: 540px; font-size: 26px; line-height: 1.2; font-weight: 600; }
+.eligibility-copy li { max-width: none; font-size: 26px; line-height: 1.2; font-weight: 600; }
 .eligibility-pretzel { position: absolute; top: 37px; left: 66.74%; width: 154px; }
-.steps { padding: 0 32px 138px; }
+.steps { padding: 0 24px 138px; }
 .steps-inner { width: min(100%, var(--page-width)); margin: auto; }
 .steps-panel { position: relative; display: flex; flex-direction: column; gap: 28px; padding: 36px 48px 48px; border: 2px solid var(--orange); border-radius: 32px; background: var(--orange); color: var(--paper); }
 .steps-panel h2 { max-width: none; margin: 0; font-size: 44px; }
@@ -135,8 +135,8 @@ h1, h2, h3, p, figure { margin: 0; }
 .steps-cta { width: var(--steps-cta-width, 320px); max-width: 100%; margin-inline: auto; transition: width 0s linear, transform .42s cubic-bezier(.2,.75,.25,1), box-shadow .42s ease, background-color .32s ease; }
 .steps-stamp { position: absolute; z-index: 2; top: -52px; left: 54%; width: 135px; height: 183px; overflow: hidden; filter: drop-shadow(0 3px 4px #0003); transform: rotate(4.78deg); pointer-events: none; }
 .steps-stamp img { position: absolute; top: -113.88%; left: -262.5%; width: 463.8%; max-width: none; height: 227.85%; }
-.footer { min-height: 331px; padding: 48px 32px 36px; background: var(--ink); color: var(--paper); }
-.footer-inner { display: grid; grid-template-columns: 132px minmax(320px, 720px) auto; gap: 36px; width: min(100%, var(--page-width)); min-height: 247px; margin: auto; align-content: start; }
+.footer { min-height: 331px; padding: 48px 24px 36px; background: var(--ink); color: var(--paper); }
+.footer-inner { display: grid; grid-template-columns: 132px minmax(320px, 1fr) auto; gap: 36px; width: min(100%, var(--page-width)); min-height: 247px; margin: auto; align-content: start; }
 .footer-brand img { width: 132px; height: auto; }
 .footer-note { font-size: 18px; line-height: 1.3; }
 .footer-lead { margin-bottom: 12px; font-weight: 700; }
@@ -158,12 +158,12 @@ h1, h2, h3, p, figure { margin: 0; }
   .art-button { right: 1%; width: 130px; }
   .art-letter { right: 8%; width: 115px; }
   .hero-down { top: 612px; }
-  .benefits { padding-inline: 32px; }
+  .benefits { padding-inline: 24px; }
   .benefits-inner { grid-template-columns: minmax(0, 1fr) 310px; gap: 36px; }
   .benefit-stack { height: min(384px, 54svh); }
   .benefit-card { padding-inline: 30px; }
   .benefit-card h3 { width: auto; font-size: 27px; }
-  .eligibility { min-height: auto; padding-top: 180px; padding-bottom: 120px; }
+  .eligibility { min-height: 100svh; padding: 100px 24px; }
   .eligibility-inner { width: 100%; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 32px; align-items: center; }
   .florist-frame { width: 100%; height: auto; aspect-ratio: 342 / 456; }
   .eligibility-copy { padding-top: 0; }
@@ -178,13 +178,13 @@ h1, h2, h3, p, figure { margin: 0; }
   .step-item .card-number, .step-item p { font-size: 21px; }
 }
 @media (max-width: 760px) {
-  .benefits { padding-inline: 22px; }
+  .benefits { padding-inline: 16px; }
   .benefits-inner { display: flex; flex-direction: column; justify-content: center; align-items: stretch; gap: 18px; width: 100%; padding: 76px 0 24px; }
   .benefits-copy { flex: 0 0 auto; }
   .benefit-stack { flex: 0 0 auto; width: min(100%, 420px); height: min(280px, 42svh); margin: 0 auto; }
   .benefit-card { padding: 22px 24px 28px; border-radius: 26px; }
   .benefit-card h3 { max-width: 265px; font-size: clamp(19px, 5vw, 25px); }
-  .eligibility { padding: 140px 32px 100px; }
+  .eligibility { padding: 140px 16px 100px; }
   .eligibility-inner { grid-template-columns: 1fr; gap: 32px; }
   .florist-frame { width: min(100%, 420px); margin-inline: auto; }
   .eligibility-copy { width: 100%; max-width: none; padding-top: 0; }
@@ -205,9 +205,9 @@ h1, h2, h3, p, figure { margin: 0; }
   .header-mark img { width: 28px; height: 28px; }
   .header-cta { min-height: 42px; padding: 0 15px; border-radius: 16px; font-size: 12px; }
   .hero, .hero-inner { min-height: 690px; }
-  .hero-brand { top: 14px; left: 20px; gap: 9px; font-size: 24px; }
+  .hero-brand { top: 14px; left: 16px; gap: 9px; font-size: 24px; }
   .hero-brand img { width: 40px; height: 40px; }
-  .hero-copy { top: 285px; width: calc(100% - 40px); }
+  .hero-copy { top: 285px; width: calc(100% - 32px); }
   .hero h1 { max-width: 480px; font-size: clamp(30px, 8.2vw, 44px); line-height: 1.02; letter-spacing: -.055em; }
   .hero-button { width: auto; height: 68px; min-width: 0; min-height: 68px; margin-top: 28px; padding: 0 28px; border-radius: 22px; font-size: 15px; }
   .art-ceramic { left: 7%; top: 87px; width: 100px; }
@@ -228,21 +228,21 @@ h1, h2, h3, p, figure { margin: 0; }
   .benefit-stack { height: min(260px, 39svh); }
   .benefit-card { padding: 20px 22px 24px; border-radius: 26px; }
   .card-number { font-size: 20px; }
-  .eligibility { padding: 90px 22px 90px; }
-  .eligibility-inner { grid-template-columns: 1fr; gap: 32px; max-width: 480px; }
+  .eligibility { padding: 90px 16px; }
+  .eligibility-inner { grid-template-columns: 1fr; gap: 32px; }
   .florist-frame { width: min(100%, 350px); height: auto; aspect-ratio: 306 / 408; margin-inline: auto; }
   .sticker-text { width: 150px; left: -15px; bottom: -22px; }
   .eligibility-copy h2, .steps h2 { font-size: clamp(27px, 7.2vw, 36px); }
   .eligibility-copy ul { gap: 16px; margin-top: 20px; }
   .eligibility-copy li { font-size: 15px; }
   .eligibility-pretzel { top: 25px; right: 22px; left: auto; width: 86px; }
-  .steps { padding: 0 22px 88px; }
+  .steps { padding: 0 16px 88px; }
   .steps-panel { gap: 20px; padding: 24px 22px 26px; border-radius: 26px; }
   .steps-panel h2 { font-size: clamp(27px, 7.2vw, 36px); }
   .step-item .card-number, .step-item p { font-size: 18px; }
   .steps-cta { min-height: 72px; border-radius: 24px; font-size: 18px; }
   .steps-stamp { top: -88px; right: 14px; left: auto; width: 76px; height: 103px; }
-  .footer { min-height: 290px; padding: 34px 22px 28px; }
+  .footer { min-height: 290px; padding: 34px 16px 28px; }
   .footer-inner { grid-template-columns: 90px 1fr; gap: 22px; min-height: 225px; }
   .footer-brand img { width: 90px; }
   .footer-note { font-size: 13px; }
