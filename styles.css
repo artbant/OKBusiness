@@ -128,10 +128,8 @@ h1, h2, h3, p, figure { margin: 0; }
 .eligibility-inner { position: relative; display: flex; flex-direction: column; align-items: center; width: min(100%, 83.333vw, 1440px); margin: auto; }
 .eligibility-collage { position: relative; flex: 0 0 auto; width: min(100%, 83.4vw, 1440px); aspect-ratio: 1201 / 515; isolation: isolate; }
 .eligibility-photo { position: absolute; overflow: hidden; border: 3px solid #fff; border-radius: 32px; background: #fff; box-shadow: 0 4px 4px #0004; }
-.eligibility-photo--garden { z-index: 1; left: 7.08%; top: 6.21%; width: 29.3%; height: 86.5%; display: grid; grid-template-columns: 1fr 1fr; transform: rotate(-10.12deg); }
-.garden-panel { display: block; min-width: 0; background-image: url('assets/eligibility-photo-main.png'); background-repeat: no-repeat; background-size: 800% auto; }
-.garden-panel--tomatoes { background-image: url('assets/eligibility-photo-collage.png'); background-size: cover; background-position: center; }
-.garden-panel--watering { background-position: 35.714% 0; }
+.eligibility-photo--garden { z-index: 1; left: 7.08%; top: 6.21%; width: 29.3%; height: 86.5%; transform: rotate(-10.12deg); }
+.eligibility-photo--garden img { width: 100%; height: 100%; object-fit: cover; }
 .eligibility-photo--florist { z-index: 2; left: 59.95%; top: .09%; width: 32%; height: 94.6%; transform: rotate(5.58deg); }
 .eligibility-photo--florist img, .eligibility-photo--woodshop img { width: 100%; height: 100%; object-fit: cover; }
 .eligibility-photo--woodshop { z-index: 3; left: 34.97%; top: 13.98%; width: 33.9%; height: 54.1%; transform: rotate(-5.47deg); }
