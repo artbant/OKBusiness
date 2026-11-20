@@ -10,6 +10,7 @@
   const stepsCta = document.querySelector('.steps-cta');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const mobileViewport = window.matchMedia('(max-width: 760px)').matches;
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
   const updateHeader = () => {
@@ -78,11 +79,54 @@
   if (document.fonts?.ready) document.fonts.ready.then(updateOnScroll);
 
   const artObjects = [...document.querySelectorAll('.art-object')];
+  const cursorLayer = document.querySelector('.hero-cursor-objects');
+  const teaserFoodImages = [
+    'teaser-tomato.png', 'teaser-lemon.png', 'teaser-croissant.png', 'teaser-pepper.png',
+    'teaser-icecream.png', 'teaser-radish.png', 'teaser-pretzel.png', 'teaser-fig.png',
+    'teaser-macaron.png', 'teaser-corn.png', 'teaser-cheese.png', 'teaser-pear.png',
+    'teaser-pelmeni.png', 'teaser-cherry.png'
+  ];
+  const teaserObjectImages = [
+    'teaser-impossible-hand.png', 'teaser-glass-sculpture.png', 'teaser-paper-plant.png',
+    'teaser-absurd-miniature.png', 'teaser-soft-sculpture.png', 'teaser-fabric-object.png',
+    'teaser-magnet.png', 'teaser-key.png', 'teaser-magnifier.png', 'teaser-puzzle.png',
+    'teaser-umbrella.png', 'teaser-balloon.png', 'teaser-pencil.png', 'teaser-cup.png',
+    'teaser-lamp.png', 'teaser-bow.png'
+  ];
+  const teaserImages = [...teaserFoodImages, ...teaserObjectImages];
+  let lastSpawnAt = 0;
+  let lastSpawnX = -Infinity;
+  let lastSpawnY = -Infinity;
+  const spawnTeaserImage = (x, y) => {
+    if (!cursorLayer) return;
+    const image = document.createElement('img');
+    const filename = teaserImages[Math.floor(Math.random() * teaserImages.length)];
+    image.className = `cursor-object${teaserFoodImages.includes(filename) ? ' cursor-object--paper' : ''}`;
+    image.src = `assets/${filename}`;
+    image.alt = '';
+    image.setAttribute('aria-hidden', 'true');
+    image.style.left = `${clamp(x, 46, cursorLayer.clientWidth - 46)}px`;
+    image.style.top = `${clamp(y, 46, cursorLayer.clientHeight - 46)}px`;
+    image.style.setProperty('--spawn-rotation', `${Math.round(Math.random() * 36 - 18)}deg`);
+    cursorLayer.append(image);
+    window.setTimeout(() => image.remove(), 1450);
+  };
+
   if (finePointer && !reducedMotion.matches) {
     hero.addEventListener('pointermove', (event) => {
       const bounds = hero.getBoundingClientRect();
       const x = (event.clientX - bounds.left) / bounds.width - 0.5;
       const y = (event.clientY - bounds.top) / bounds.height - 0.5;
+      const now = performance.now();
+      const distance = Math.hypot(event.clientX - lastSpawnX, event.clientY - lastSpawnY);
+      if (now - lastSpawnAt > 190 && distance > 52) {
+        const offsetX = Math.random() * 130 - 65;
+        const offsetY = Math.random() * 130 - 65;
+        spawnTeaserImage(event.clientX - bounds.left + offsetX, event.clientY - bounds.top + offsetY);
+        lastSpawnAt = now;
+        lastSpawnX = event.clientX;
+        lastSpawnY = event.clientY;
+      }
       artObjects.forEach((object) => {
         const depthX = Number(object.dataset.depthX || 0.2);
         const depthY = Number(object.dataset.depthY || 0.2);
@@ -98,7 +142,7 @@
     });
   }
 
-  if (!finePointer && !reducedMotion.matches) {
+  if ((!finePointer || mobileViewport) && !reducedMotion.matches) {
     artObjects.forEach((object, index) => {
       object.style.setProperty('--float-x', `${((index % 3) - 1) * 5}px`);
       object.style.setProperty('--float-y', `${-5 - ((index * 3) % 8)}px`);
@@ -108,6 +152,25 @@
     const style = document.createElement('style');
     style.textContent = '@keyframes float { from { translate: 0 0; rotate: 0deg; } to { translate: var(--float-x) var(--float-y); rotate: var(--float-rotation); } }';
     document.head.append(style);
+    const spawnMobileObject = () => {
+      if (window.scrollY > hero.offsetHeight || !cursorLayer) return;
+      const x = cursorLayer.clientWidth * (.16 + Math.random() * .68);
+      const y = cursorLayer.clientHeight * (.18 + Math.random() * .64);
+      spawnTeaserImage(x, y);
+    };
+    const nextAppearance = () => window.setTimeout(() => {
+      if (window.scrollY > hero.offsetHeight) return;
+      spawnMobileObject();
+      nextAppearance();
+    }, 2300 + Math.random() * 2100);
+    window.setTimeout(() => {
+      spawnMobileObject();
+      nextAppearance();
+    }, 900);
+    hero.addEventListener('pointerdown', (event) => {
+      const bounds = hero.getBoundingClientRect();
+      spawnTeaserImage(event.clientX - bounds.left, event.clientY - bounds.top);
+    });
   }
 
   const eligibility = document.querySelector('.eligibility');
