@@ -52,8 +52,8 @@ html { scroll-behavior: smooth; scroll-padding-top: 100px; }
 body { margin: 0; background: var(--paper); color: var(--ink); }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
-.skip-link { position: fixed; z-index: 30; left: 1rem; top: 1rem; padding: .75rem 1rem; border-radius: 999px; background: var(--ink); color: white; transform: translateY(-160%); }
-.skip-link:focus { transform: translateY(0); }
+.skip-link { position: fixed; z-index: 30; left: -9999px; top: 1rem; padding: .75rem 1rem; border-radius: 999px; background: var(--ink); color: white; }
+.skip-link:focus-visible { left: 1rem; }
 .floating-header { position: fixed; z-index: 20; top: 16px; left: 50%; width: calc(100% - 48px); display: flex; align-items: center; pointer-events: none; transform: translate(-50%, -150%); transition: transform .45s cubic-bezier(.2,.75,.25,1); }
 .floating-header.is-visible { transform: translate(-50%, 0); }
 .floating-header.is-suppressed { transform: translate(-50%, -150%); }
@@ -137,8 +137,8 @@ h1, h2, h3, p, figure { margin: 0; }
 .eligibility-pretzel { position: absolute; z-index: 5; left: 49.96%; top: 55.15%; width: 12.82%; height: auto; }
 .eligibility-copy { width: 100%; max-width: none; padding-top: 0; }
 .eligibility-copy h2, .steps h2 { max-width: none; font-size: clamp(32px, 2.78vw, 48px); line-height: 1.1; letter-spacing: -.04em; font-weight: 700; }
-.eligibility-copy h2 { width: min(36.32vw, 700px); margin: 0 auto; text-align: center; }
-.eligibility-copy ul { position: relative; left: 4px; display: grid; grid-template-columns: 250px 330px 298px; justify-content: space-between; align-items: start; width: min(72.6vw, 1045px); margin: clamp(72px, 8.75vw, 128px) auto 0; padding: 0; list-style: none; }
+.eligibility-copy h2 { width: min(56vw, 900px); margin: 0 auto; text-align: center; }
+.eligibility-copy ul { position: relative; left: 4px; display: grid; grid-template-columns: 250px 330px 298px; justify-content: space-between; align-items: start; width: min(72.6vw, 1045px); margin: 24px auto 0; padding: 0; list-style: none; }
 .eligibility-copy li { max-width: 100%; font-size: clamp(18px, 1.667vw, 30px); line-height: 1.2; font-weight: 600; text-align: center; }
 .eligibility-copy li:nth-child(2) { transform: translateX(clamp(0px, 1.39vw, 24px)); }
 .steps { padding: 0 8.333vw 138px; }
@@ -154,12 +154,12 @@ h1, h2, h3, p, figure { margin: 0; }
 .steps-cta { width: var(--steps-cta-width, 320px); max-width: 100%; margin-inline: auto; transition: width 0s linear, transform .42s cubic-bezier(.2,.75,.25,1), box-shadow .42s ease, background-color .32s ease; }
 .steps-stamp { position: absolute; z-index: 2; top: -52px; left: 54%; width: 135px; height: 183px; overflow: hidden; filter: drop-shadow(0 3px 4px #0003); transform: rotate(4.78deg); pointer-events: none; }
 .steps-stamp img { position: absolute; top: -113.88%; left: -262.5%; width: 463.8%; max-width: none; height: 227.85%; }
-.footer { min-height: clamp(331px, 23vw, 430px); padding: clamp(48px, 3.33vw, 64px) 8.333vw 36px; background: var(--ink); color: var(--paper); }
+.footer { min-height: clamp(331px, 23vw, 430px); padding: clamp(48px, 3.33vw, 64px) 8.333vw 20px; background: var(--ink); color: var(--paper); }
 .footer-inner { display: grid; grid-template-columns: 36.34% minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 0; width: 100%; min-height: clamp(247px, 17.15vw, 320px); margin: auto; align-content: start; }
 .footer-brand img { width: clamp(120px, 8.333vw, 160px); height: auto; }
-.footer-note { max-width: 41.46vw; font-size: clamp(24px, 1.667vw, 31px); line-height: 1.05; }
-.footer-lead { margin-bottom: 32px; font-weight: 700; }
-.footer-inner small { grid-column: 2; align-self: end; margin-top: clamp(90px, 9.4vw, 140px); font-size: clamp(15px, 1.04vw, 20px); line-height: 1.05; }
+.footer-note { max-width: 41.46vw; font-size: clamp(12px, .833vw, 16px); line-height: 1.2; }
+.footer-lead { margin-bottom: 16px; font-weight: 700; }
+.footer-inner small { grid-column: 2; align-self: end; margin-top: clamp(90px, 9.4vw, 140px); font-size: clamp(12px, .833vw, 16px); line-height: 1.2; }
 
 @media (max-width: 900px) {
   .hero, .hero-inner { min-height: 650px; }
@@ -184,9 +184,12 @@ h1, h2, h3, p, figure { margin: 0; }
   .benefit-card h3 { width: auto; font-size: 27px; }
   .eligibility { min-height: 0; padding: 88px 24px 100px; }
   .eligibility-inner { width: 100%; }
-  .eligibility-collage { width: min(100%, 83.4vw, 1201px); }
+  .eligibility-collage { width: 100%; }
+  .eligibility-photo--garden { left: 4%; width: 31%; }
+  .eligibility-photo--woodshop { left: 32%; width: 36%; }
+  .eligibility-photo--florist { left: 58%; width: 35%; }
   .eligibility-copy h2 { width: min(100%, 523px); font-size: clamp(28px, 4vw, 36px); }
-  .eligibility-copy ul { left: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; width: 100%; margin-top: 64px; }
+  .eligibility-copy ul { left: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; width: 100%; margin-top: 24px; }
   .eligibility-copy li:nth-child(2) { transform: none; }
   .eligibility-copy li { font-size: clamp(18px, 2.2vw, 22px); }
   .steps { padding-inline: 24px; }
@@ -205,11 +208,15 @@ h1, h2, h3, p, figure { margin: 0; }
   .benefit-card h3 { max-width: 265px; font-size: clamp(19px, 5vw, 25px); }
   .eligibility { padding: 112px 24px 88px; }
   .eligibility-inner { width: 100%; }
-  .eligibility-collage { width: min(100%, 83.4vw, 1201px); margin-inline: auto; }
+  .eligibility-collage { width: calc(100% + 48px); margin-inline: -24px; aspect-ratio: 1.65; }
+  .eligibility-photo { height: auto; border-radius: clamp(16px, 4vw, 30px); }
+  .eligibility-photo--garden { left: 0; width: 36%; aspect-ratio: .79; }
+  .eligibility-photo--woodshop { left: 27%; width: 44%; aspect-ratio: 1.46; }
+  .eligibility-photo--florist { left: 52%; width: 44%; aspect-ratio: .79; }
   .eligibility-copy { width: 100%; max-width: none; padding-top: 0; }
   .eligibility-copy h2 { width: min(100%, 523px); }
-  .eligibility-copy ul { left: 0; grid-template-columns: 1fr; gap: 18px; width: 100%; margin-top: 32px; }
-  .eligibility-copy li { font-size: 18px; text-align: left; }
+  .eligibility-copy ul { left: 0; grid-template-columns: 1fr; gap: 18px; width: 100%; margin-top: 24px; }
+  .eligibility-copy li { font-size: 18px; text-align: center; }
   .steps { padding-inline: 24px; }
   .steps-panel { padding: 26px 28px 30px; }
   .steps-list { grid-template-columns: 1fr; gap: 18px; min-height: 0; }
@@ -251,9 +258,9 @@ h1, h2, h3, p, figure { margin: 0; }
   .card-number { font-size: 20px; }
   .eligibility { padding: 90px 16px; }
   .eligibility-inner { width: 100%; }
-  .eligibility-collage { width: 100%; }
+  .eligibility-collage { width: calc(100% + 32px); margin-inline: -16px; }
   .eligibility-copy h2, .steps h2 { font-size: clamp(27px, 7.2vw, 36px); }
-  .eligibility-copy ul { gap: 16px; margin-top: 20px; }
+  .eligibility-copy ul { gap: 16px; margin-top: 24px; }
   .eligibility-copy li { font-size: 15px; }
   .steps { padding: 0 16px 88px; }
   .steps-panel { gap: 20px; padding: 24px 22px 26px; border-radius: 26px; }
@@ -266,7 +273,7 @@ h1, h2, h3, p, figure { margin: 0; }
   .footer-brand img { width: 90px; }
   .footer-note { font-size: 13px; }
   .footer-lead { margin-bottom: 12px; }
-  .footer-inner small { grid-column: 2; justify-self: start; margin-top: 24px; font-size: 12px; }
+  .footer-inner small { grid-column: 2; justify-self: start; margin-top: 36px; font-size: 13px; }
 }
 @media (max-width: 380px) {
   .hero h1 { font-size: 29px; }
