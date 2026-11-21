@@ -48,7 +48,7 @@
   text-rendering: optimizeLegibility;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+html { scroll-behavior: smooth; scroll-padding-top: 100px; overflow-x: clip; }
 body { margin: 0; background: var(--paper); color: var(--ink); }
 img { display: block; max-width: 100%; }
 a { color: inherit; }
@@ -103,7 +103,7 @@ h1, h2, h3, p, figure { margin: 0; }
 .art-paint { left: 13%; top: 424px; width: 172px; }
 .art-button { right: 3.4%; top: 172px; width: 168px; transform: rotate(-43deg); }
 .art-letter { right: 17.4%; top: 420px; width: 140px; transform: rotate(-25deg); }
-.benefits { --benefits-runway: 130svh; position: relative; height: calc(100svh + var(--benefits-runway)); padding: 0; background: var(--ink); color: var(--paper); }
+.benefits { --benefits-runway: 130svh; position: relative; height: calc(100svh + var(--benefits-runway)); padding: 0; overflow-x: clip; background: var(--ink); color: var(--paper); }
 .benefits-inner { position: sticky; top: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(380px, 26.4vw); gap: min(80px, 5.56vw); align-items: center; width: min(100%, var(--page-width)); height: 100svh; margin: auto; }
 .benefits-copy { padding-top: 0; }
 .eyebrow { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; font-size: 22px; font-weight: 700; }
